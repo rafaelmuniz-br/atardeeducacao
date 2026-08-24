@@ -17,29 +17,28 @@ const filtrados = computed(() => eventos.filter((e) => matchesSearch(busca.value
       kicker="Eventos"
       title="Encontros que colocam a educação em movimento."
       text="Ao longo do ano, o A TARDE Educação promove diferentes experiências que ampliam os espaços de aprendizagem, diálogo e participação. São encontros, iniciativas culturais, formações e premiações que aproximam educadores, estudantes e comunidades de temas relevantes para a educação e para a sociedade."
-    />
+    >
+      <a
+        href="https://atardeeducacaopremia.atarde.com.br/"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="ate-premia-cta"
+      >
+        <div>
+          <strong>Conheça o nosso portal de premiações</strong>
+          <span>Concursos culturais, prêmios e regulamentos do A TARDE Educação, tudo em um só lugar.</span>
+        </div>
+        <span class="ate-btn ate-btn--primary ate-btn--sm ate-premia-cta__btn">
+          Visitar portal
+          <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2">
+            <path d="M7 17 17 7M9 7h8v8" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </span>
+      </a>
+    </PageHero>
 
     <section class="ate-section">
       <div class="ate-container">
-        <a
-          href="https://atardeeducacaopremia.atarde.com.br/"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="ate-premia-cta ate-reveal"
-          v-reveal
-        >
-          <div>
-            <strong>Conheça o nosso portal de premiações</strong>
-            <span>Concursos culturais, prêmios e regulamentos do A TARDE Educação, tudo em um só lugar.</span>
-          </div>
-          <span class="ate-btn ate-btn--primary ate-btn--sm ate-premia-cta__btn">
-            Visitar portal
-            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2">
-              <path d="M7 17 17 7M9 7h8v8" stroke-linecap="round" stroke-linejoin="round" />
-            </svg>
-          </span>
-        </a>
-
         <div class="ate-toolbar ate-reveal" v-reveal="80">
           <p class="ate-kicker" style="margin-bottom: 0">Iniciativas permanentes</p>
           <SearchInput v-model="busca" placeholder="Buscar por nome ou tema..." />
@@ -81,7 +80,7 @@ const filtrados = computed(() => eventos.filter((e) => matchesSearch(busca.value
   justify-content: space-between;
   gap: 1.2rem;
   padding: 1.5rem 1.75rem;
-  margin-bottom: 2.4rem;
+  margin-top: 2rem;
   border-radius: var(--ate-radius);
   background: linear-gradient(135deg, var(--ate-blue) 0%, var(--ate-blue-deep) 100%);
   color: #fff;
