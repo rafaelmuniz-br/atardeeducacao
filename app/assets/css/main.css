@@ -1,0 +1,298 @@
+/* A TARDE Educação — identidade extraída do site/branding atual do grupo
+   (azul #0972B3, laranja #F58220) e da logo oficial do programa
+   (public/marca/logo.png, extraída do próprio site em produção). Serif
+   "Bree Serif" para títulos (mesma família usada na wordmark A TARDE) +
+   "Open Sans" para o corpo do texto — tom institucional de jornal, não de
+   clínica/boutique. Tema escuro inspirado no dark mode do Washington Post
+   (referência citada pelo cliente): quase-preto com azul/laranja vibrando
+   por cima. */
+
+:root {
+  --ate-blue: #0972b3;
+  --ate-blue-deep: #075685;
+  --ate-blue-bright: #1b93dc;
+  --ate-orange: #f58220;
+  --ate-orange-deep: #c65602;
+  --ate-orange-light: #f9d77e;
+
+  --ate-ink: #12293c;
+  --ate-ink-soft: #4c6478;
+  --ate-bg: #ffffff;
+  --ate-bg-alt: #f3f8fb;
+  --ate-surface: #ffffff;
+  --ate-line: #dce7ee;
+
+  --ate-shadow-sm: 0 1px 3px rgba(9, 41, 66, 0.08);
+  --ate-shadow-md: 0 14px 34px rgba(9, 41, 66, 0.12);
+  --ate-radius: 16px;
+  --ate-radius-sm: 10px;
+
+  --ate-font-display: 'Bree Serif', Georgia, 'Times New Roman', serif;
+  --ate-font-body: 'Open Sans Variable', 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  color-scheme: light;
+}
+
+:root[data-theme='dark'] {
+  --ate-blue: #4db2ff;
+  --ate-blue-deep: #7fc9ff;
+  --ate-blue-bright: #6dc0ff;
+  --ate-orange: #ffa94d;
+  --ate-orange-deep: #ffc078;
+  --ate-orange-light: #3a2c17;
+
+  --ate-ink: #eaf2f8;
+  --ate-ink-soft: #9fb4c4;
+  --ate-bg: #0a1620;
+  --ate-bg-alt: #0e1f2b;
+  --ate-surface: #142735;
+  --ate-line: #23394a;
+
+  --ate-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.35);
+  --ate-shadow-md: 0 16px 38px rgba(0, 0, 0, 0.45);
+
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 88px;
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  margin: 0;
+  font-family: var(--ate-font-body);
+  background: var(--ate-bg);
+  color: var(--ate-ink);
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  margin: 0;
+  line-height: 1.18;
+  font-family: var(--ate-font-display);
+  font-weight: 400;
+  color: var(--ate-ink);
+}
+
+p {
+  margin: 0;
+  line-height: 1.7;
+  color: var(--ate-ink-soft);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+button {
+  font-family: inherit;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* ---------- layout helpers ---------- */
+
+.ate-container {
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.ate-section {
+  padding: clamp(3.5rem, 6vw, 6.5rem) 0;
+}
+
+.ate-section--alt {
+  background: var(--ate-bg-alt);
+}
+
+.ate-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-family: var(--ate-font-body);
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--ate-orange-deep);
+  margin-bottom: 0.9rem;
+}
+:root[data-theme='dark'] .ate-kicker {
+  color: var(--ate-orange);
+}
+.ate-kicker::before {
+  content: '';
+  width: 26px;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--ate-orange);
+}
+
+.ate-eyebrow-title {
+  font-size: clamp(1.9rem, 3.4vw, 2.6rem);
+}
+
+.ate-lede {
+  font-size: 1.1rem;
+  max-width: 62ch;
+}
+
+/* ---------- buttons ---------- */
+
+.ate-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1.6rem;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.98rem;
+  font-family: var(--ate-font-body);
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease, color 0.15s ease,
+    border-color 0.15s ease;
+  white-space: nowrap;
+}
+.ate-btn:active {
+  transform: translateY(1px) scale(0.98);
+}
+
+.ate-btn--primary {
+  background: var(--ate-orange);
+  color: #1a1005;
+  box-shadow: var(--ate-shadow-sm);
+}
+.ate-btn--primary:hover {
+  background: var(--ate-orange-deep);
+  box-shadow: var(--ate-shadow-md);
+  transform: translateY(-2px);
+}
+:root[data-theme='dark'] .ate-btn--primary {
+  color: #1a1005;
+}
+
+.ate-btn--ghost {
+  background: transparent;
+  border-color: rgba(255, 255, 255, 0.55);
+  color: currentColor;
+}
+.ate-btn--ghost:hover {
+  background: rgba(255, 255, 255, 0.12);
+  transform: translateY(-2px);
+}
+
+.ate-btn--outline {
+  background: transparent;
+  border-color: var(--ate-blue);
+  color: var(--ate-blue);
+}
+.ate-btn--outline:hover {
+  background: var(--ate-blue);
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+.ate-btn--sm {
+  padding: 0.6rem 1.15rem;
+  font-size: 0.88rem;
+}
+
+/* ---------- cards ---------- */
+
+.ate-card {
+  background: var(--ate-surface);
+  border: 1px solid var(--ate-line);
+  border-radius: var(--ate-radius);
+  box-shadow: var(--ate-shadow-sm);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+.ate-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--ate-shadow-md);
+  border-color: var(--ate-blue);
+}
+
+/* ---------- scroll reveal ---------- */
+
+.ate-reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.ate-reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .ate-reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* ---------- expand/collapse height transitions (accordion, "ler mais") --- */
+
+.ate-expand-enter-active,
+.ate-expand-leave-active {
+  transition: grid-template-rows 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  display: grid;
+  grid-template-rows: 1fr;
+  overflow: hidden;
+}
+.ate-expand-enter-from,
+.ate-expand-leave-to {
+  grid-template-rows: 0fr;
+}
+
+/* ---------- focus ---------- */
+
+a:focus-visible,
+button:focus-visible {
+  outline: 3px solid var(--ate-blue-bright);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ---------- misc ---------- */
+
+.ate-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
