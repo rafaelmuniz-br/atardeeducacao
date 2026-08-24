@@ -8,8 +8,15 @@ useSeoMeta({
 
 const categorias = ['Todas', ...new Set(noticias.map((n) => n.categoria))]
 const ativa = ref('Todas')
+const busca = ref('')
 
-const filtradas = computed(() => (ativa.value === 'Todas' ? noticias : noticias.filter((n) => n.categoria === ativa.value)))
+const filtradas = computed(() =>
+  noticias.filter((n) => {
+    const naCategoria = ativa.value === 'Todas' || n.categoria === ativa.value
+    const naBusca = matchesSearch(busca.value, n.titulo, n.tags, n.categoria)
+    return naCategoria && naBusca
+  })
+)
 </script>
 
 <template>
@@ -22,33 +29,53 @@ const filtradas = computed(() => (ativa.value === 'Todas' ? noticias : noticias.
 
     <section class="ate-section">
       <div class="ate-container">
-        <div class="ate-filtros ate-reveal" v-reveal>
-          <button
-            v-for="cat in categorias"
-            :key="cat"
-            type="button"
-            class="ate-filtro"
-            :class="{ 'is-active': ativa === cat }"
-            @click="ativa = cat"
-          >
-            {{ cat }}
-          </button>
+        <div class="ate-toolbar ate-reveal" v-reveal>
+          <SearchInput v-model="busca" placeholder="Buscar por título ou tema..." />
+          <div class="ate-filtros">
+            <button
+              v-for="cat in categorias"
+              :key="cat"
+              type="button"
+              class="ate-filtro"
+              :class="{ 'is-active': ativa === cat }"
+              @click="ativa = cat"
+            >
+              {{ cat }}
+            </button>
+          </div>
         </div>
 
-        <TransitionGroup name="ate-news-fade" tag="div" class="ate-news-grid">
-          <NewsCard v-for="(n, i) in filtradas" :key="n.slug" :noticia="n" class="ate-reveal" :style="{ transitionDelay: `${(i % 6) * 60}ms` }" v-reveal="0" />
-        </TransitionGroup>
+        <div v-if="filtradas.length" class="ate-news-grid">
+          <div v-for="(n, i) in filtradas" :key="n.slug" class="ate-reveal" :style="{ transitionDelay: `${(i % 6) * 60}ms` }" v-reveal="0">
+            <NewsCard :noticia="n" />
+          </div>
+        </div>
+        <p v-else class="ate-empty">Nenhuma notícia encontrada para essa busca.</p>
       </div>
     </section>
   </div>
 </template>
 
 <style scoped>
+.ate-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 2.5rem;
+}
 .ate-filtros {
   display: flex;
   flex-wrap: wrap;
   gap: 0.6rem;
-  margin-bottom: 2.5rem;
+}
+.ate-empty {
+  padding: 3rem 1rem;
+  text-align: center;
+  color: var(--ate-ink-soft);
+  border: 1px dashed var(--ate-line);
+  border-radius: var(--ate-radius);
 }
 .ate-filtro {
   padding: 0.55rem 1.1rem;
@@ -75,17 +102,5 @@ const filtradas = computed(() => (ativa.value === 'Todas' ? noticias : noticias.
   display: grid;
   gap: 1.5rem;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-}
-
-.ate-news-fade-move,
-.ate-news-fade-enter-active {
-  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.ate-news-fade-enter-from {
-  opacity: 0;
-  transform: translateY(14px);
-}
-.ate-news-fade-leave-active {
-  position: absolute;
 }
 </style>

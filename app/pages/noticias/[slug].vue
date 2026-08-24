@@ -32,8 +32,10 @@ useSeoMeta({
     </section>
 
     <section class="ate-section">
-      <div class="ate-container ate-noticia-body">
-        <p v-for="(par, i) in noticia.corpo" :key="i">{{ par }}</p>
+      <div class="ate-container">
+        <div class="ate-noticia-body">
+          <p v-for="(par, i) in noticia.corpo" :key="i">{{ par }}</p>
+        </div>
       </div>
     </section>
 
@@ -50,7 +52,7 @@ useSeoMeta({
 
 <style scoped>
 .ate-noticia-hero {
-  padding: 3rem 0 3.5rem;
+  padding: var(--ate-space) 0;
   color: #fff;
 }
 .ate-noticia-back {

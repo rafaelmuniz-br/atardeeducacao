@@ -13,6 +13,7 @@ export interface Noticia {
   corpo: string[]
   data: string
   cor: string
+  tags: string[]
 }
 
 export const noticias: Noticia[] = [
@@ -29,6 +30,7 @@ export const noticias: Noticia[] = [
     ],
     data: '2026-06-12',
     cor: '#0972b3',
+    tags: ['formação', 'professores', 'encontros de educação', 'jornal na escola'],
   },
   {
     slug: 'jovem-jornalista-2026-inscricoes-abertas',
@@ -43,6 +45,7 @@ export const noticias: Noticia[] = [
     ],
     data: '2026-05-28',
     cor: '#f58220',
+    tags: ['concurso', 'jovem jornalista', 'estudantes', 'jornalismo'],
   },
   {
     slug: 'premio-ecoinovar-projetos-socioambientais',
@@ -57,6 +60,7 @@ export const noticias: Noticia[] = [
     ],
     data: '2026-04-30',
     cor: '#0e8f6b',
+    tags: ['prêmio ecoinovar', 'sustentabilidade', 'socioambiental', 'premiação'],
   },
   {
     slug: 'educacao-financeira-nas-escolas',
@@ -71,6 +75,7 @@ export const noticias: Noticia[] = [
     ],
     data: '2026-04-09',
     cor: '#1b93dc',
+    tags: ['educação financeira', 'consumo consciente', 'ensino fundamental'],
   },
   {
     slug: 'workshop-midias-digitais-educadores',
@@ -85,6 +90,7 @@ export const noticias: Noticia[] = [
     ],
     data: '2026-03-18',
     cor: '#7b5cf0',
+    tags: ['workshop', 'mídias digitais', 'tecnologia e mídia', 'educadores'],
   },
   {
     slug: 'encontro-educacao-abre-calendario-2026',
@@ -99,5 +105,6 @@ export const noticias: Noticia[] = [
     ],
     data: '2026-02-20',
     cor: '#0972b3',
+    tags: ['formação', 'coordenadores pedagógicos', 'encontros de educação'],
   },
 ]

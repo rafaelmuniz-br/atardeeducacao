@@ -4,7 +4,7 @@ const year = new Date().getFullYear()
 const mapaSite = [
   { to: '/o-programa', label: 'O Programa' },
   { to: '/area-de-atuacao', label: 'Área de Atuação' },
-  { to: '/formacoes', label: 'Formações' },
+  { to: '/cursos', label: 'Cursos' },
   { to: '/noticias', label: 'Notícias' },
   { to: '/eventos', label: 'Eventos' },
   { to: '/depoimentos', label: 'Depoimentos' },
@@ -17,7 +17,6 @@ const mapaSite = [
   <footer class="ate-footer">
     <div class="ate-container ate-footer__grid">
       <div class="ate-footer__brand">
-        <img src="/marca/logo.png" alt="A TARDE Educação" width="170" height="51" />
         <p class="ate-footer__tagline">
           Um programa de educomunicação do Grupo A TARDE, aproximando comunicação e educação desde 1996.
         </p>
@@ -66,6 +65,11 @@ const mapaSite = [
     <div class="ate-footer__bottom">
       <div class="ate-container ate-footer__bottom-inner">
         <p>&copy; {{ year }} A TARDE Educação. Todos os direitos reservados.</p>
+        <div class="ate-footer__legal-links">
+          <NuxtLink to="/politicas-e-termos#privacidade">Política de Privacidade</NuxtLink>
+          <NuxtLink to="/politicas-e-termos#termos">Termos de Uso</NuxtLink>
+          <NuxtLink to="/politicas-e-termos#cookies">Cookies</NuxtLink>
+        </div>
         <p>Um programa do <a href="https://atarde.com.br/" target="_blank" rel="noopener">Jornal A TARDE</a></p>
       </div>
     </div>
@@ -76,7 +80,6 @@ const mapaSite = [
 .ate-footer {
   background: var(--ate-ink);
   color: #cfe0ec;
-  margin-top: 4rem;
 }
 :root[data-theme='dark'] .ate-footer {
   background: #060d14;
@@ -88,15 +91,6 @@ const mapaSite = [
   gap: 2.5rem;
   padding: 4rem 1.5rem 3rem;
   grid-template-columns: 1.3fr 1fr 1fr;
-}
-
-.ate-footer__brand img {
-  height: 44px;
-  width: auto;
-  background: #fff;
-  padding: 0.5rem 0.75rem;
-  border-radius: 10px;
-  margin-bottom: 1.1rem;
 }
 
 .ate-footer__tagline {
@@ -175,6 +169,12 @@ const mapaSite = [
 }
 .ate-footer__bottom-inner a:hover {
   color: var(--ate-orange);
+}
+
+.ate-footer__legal-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.2rem;
 }
 
 @media (max-width: 760px) {

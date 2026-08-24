@@ -19,12 +19,9 @@ defineProps<{
 
 <style scoped>
 .ate-pagehero {
-  padding: clamp(3.5rem, 8vw, 5.5rem) 0 3rem;
+  padding: var(--ate-space) 0;
   background: linear-gradient(180deg, var(--ate-bg-alt) 0%, var(--ate-bg) 100%);
   border-bottom: 1px solid var(--ate-line);
-}
-.ate-pagehero__inner {
-  max-width: 760px;
 }
 .ate-pagehero__title {
   font-size: clamp(2rem, 4.6vw, 3rem);

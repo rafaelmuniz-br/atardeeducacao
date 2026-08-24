@@ -46,11 +46,13 @@ export default defineNuxtConfig({
         { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/marca/favicon-16.png' },
         { rel: 'apple-touch-icon', href: '/marca/apple-touch-icon.png' },
       ],
-      // Aplica o tema salvo (ou a preferência do SO) antes da hidratação,
-      // pra nunca piscar claro->escuro na carga da página.
+      // Aplica o tema salvo antes da hidratação, pra nunca piscar
+      // claro->escuro na carga da página. Padrão é sempre light, mesmo que
+      // o sistema operacional esteja em dark mode — só muda se o visitante
+      // escolher manualmente (fica salvo em localStorage).
       script: [
         {
-          innerHTML: `(function(){try{var t=localStorage.getItem('ate-theme');if(!t){t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}document.documentElement.setAttribute('data-theme',t);}catch(e){}})();`,
+          innerHTML: `(function(){try{var t=localStorage.getItem('ate-theme')||'light';document.documentElement.setAttribute('data-theme',t);}catch(e){}})();`,
         },
       ],
     },
@@ -71,12 +73,13 @@ export default defineNuxtConfig({
         '/',
         '/o-programa',
         '/area-de-atuacao',
-        '/formacoes',
+        '/cursos',
         '/eventos',
         '/depoimentos',
         '/noticias',
         '/galeria',
         '/contato',
+        '/politicas-e-termos',
       ],
     },
   },

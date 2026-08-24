@@ -22,19 +22,19 @@ function toggle(slug: string) {
     />
 
     <section class="ate-section">
-      <div class="ate-container ate-eixos-list">
-        <AccordionItem
-          v-for="(eixo, i) in eixos"
-          :key="eixo.slug"
-          :title="eixo.nome"
-          :subtitle="eixo.resumo"
-          :open="openSlug === eixo.slug"
-          class="ate-reveal"
-          v-reveal="i * 60"
-          @toggle="toggle(eixo.slug)"
-        >
-          <p>{{ eixo.texto }}</p>
-        </AccordionItem>
+      <div class="ate-container">
+        <div class="ate-eixos-list">
+          <div v-for="(eixo, i) in eixos" :key="eixo.slug" class="ate-reveal" v-reveal="i * 60">
+            <AccordionItem
+              :title="eixo.nome"
+              :subtitle="eixo.resumo"
+              :open="openSlug === eixo.slug"
+              @toggle="toggle(eixo.slug)"
+            >
+              <p>{{ eixo.texto }}</p>
+            </AccordionItem>
+          </div>
+        </div>
       </div>
     </section>
   </div>

@@ -151,8 +151,10 @@ const parceiros = ['Rede Estadual de Ensino', 'Prefeituras Parceiras', 'Grupo A 
 }
 
 .ate-missao__inner {
-  max-width: 760px;
   text-align: left;
+}
+.ate-missao__inner .ate-lede {
+  max-width: 62ch;
 }
 
 .ate-parceiros-grid {

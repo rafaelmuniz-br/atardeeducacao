@@ -35,7 +35,7 @@
 .ate-hero {
   position: relative;
   overflow: hidden;
-  padding: clamp(4.5rem, 10vw, 8rem) 0 6rem;
+  padding: var(--ate-space) 0;
   background: linear-gradient(170deg, var(--ate-blue) 0%, var(--ate-blue-deep) 100%);
   color: #fff;
 }
@@ -72,7 +72,10 @@
 
 .ate-hero__inner {
   position: relative;
-  max-width: 820px;
+}
+
+:root:not([data-theme='dark']) .ate-hero .ate-kicker {
+  color: #fff;
 }
 
 .ate-hero__title {
@@ -82,6 +85,9 @@
 }
 .ate-hero__title span {
   color: var(--ate-orange-light);
+}
+:root[data-theme='dark'] .ate-hero__title span {
+  color: #ffa94d;
 }
 
 .ate-hero__text {

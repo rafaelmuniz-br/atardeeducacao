@@ -14,22 +14,21 @@
 
 <style scoped>
 .ate-cta {
-  padding-top: 0;
-}
-.ate-cta__inner {
   background: linear-gradient(135deg, var(--ate-blue) 0%, var(--ate-blue-deep) 100%);
-  border-radius: 28px;
-  padding: clamp(2.5rem, 5vw, 4rem);
+  color: #fff;
+}
+:root[data-theme='dark'] .ate-cta {
+  background: linear-gradient(135deg, #0e2c40 0%, #071620 100%);
+}
+
+.ate-cta__inner {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   gap: 2rem;
-  color: #fff;
 }
-:root[data-theme='dark'] .ate-cta__inner {
-  background: linear-gradient(135deg, #0e2c40 0%, #071620 100%);
-}
+
 .ate-cta__inner h2 {
   color: #fff;
 }

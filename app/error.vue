@@ -10,16 +10,18 @@ useSeoMeta({
   <div>
     <SiteHeader />
     <section class="ate-error">
-      <div class="ate-container ate-error__inner">
-        <p class="ate-kicker">Erro {{ error.statusCode }}</p>
-        <h1>Não encontramos esta página.</h1>
-        <p class="ate-lede">
-          O conteúdo que você procura pode ter mudado de endereço ou não existe mais. Volte para a página inicial
-          ou explore as demais seções do A TARDE Educação.
-        </p>
-        <NuxtLink to="/" class="ate-btn ate-btn--primary" @click="clearError({ redirect: '/' })">
-          Voltar para a Home
-        </NuxtLink>
+      <div class="ate-container">
+        <div class="ate-error__inner">
+          <p class="ate-kicker">Erro {{ error.statusCode }}</p>
+          <h1>Não encontramos esta página.</h1>
+          <p class="ate-lede">
+            O conteúdo que você procura pode ter mudado de endereço ou não existe mais. Volte para a página inicial
+            ou explore as demais seções do A TARDE Educação.
+          </p>
+          <NuxtLink to="/" class="ate-btn ate-btn--primary" @click="clearError({ redirect: '/' })">
+            Voltar para a Home
+          </NuxtLink>
+        </div>
       </div>
     </section>
     <SiteFooter />

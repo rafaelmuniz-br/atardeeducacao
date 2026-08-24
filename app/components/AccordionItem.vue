@@ -19,13 +19,11 @@ const emit = defineEmits<{ toggle: [] }>()
         <path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round" />
       </svg>
     </button>
-    <Transition name="ate-expand">
-      <div v-if="open" class="ate-accordion__panel">
-        <div class="ate-accordion__panel-inner">
-          <slot />
-        </div>
+    <div class="ate-accordion__panel ate-collapse" :class="{ 'is-open': open }">
+      <div class="ate-accordion__panel-inner">
+        <slot />
       </div>
-    </Transition>
+    </div>
   </div>
 </template>
 

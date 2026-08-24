@@ -30,7 +30,19 @@
   --ate-font-display: 'Bree Serif', Georgia, 'Times New Roman', serif;
   --ate-font-body: 'Open Sans Variable', 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 
+  /* Espaçamento padrão entre/dentro de componentes de conteúdo (seções,
+     heroes) — cabeçalho e rodapé ficam fora dessa regra, mantêm suas
+     próprias dimensões. Reduzido em telas pequenas pra não sobrar vazio
+     demais num celular. */
+  --ate-space: 130px;
+
   color-scheme: light;
+}
+
+@media (max-width: 640px) {
+  :root {
+    --ate-space: 56px;
+  }
 }
 
 :root[data-theme='dark'] {
@@ -125,7 +137,7 @@ ul {
 }
 
 .ate-section {
-  padding: clamp(3.5rem, 6vw, 6.5rem) 0;
+  padding: var(--ate-space) 0;
 }
 
 .ate-section--alt {
@@ -188,7 +200,7 @@ ul {
 
 .ate-btn--primary {
   background: var(--ate-orange);
-  color: #1a1005;
+  color: #fff;
   box-shadow: var(--ate-shadow-sm);
 }
 .ate-btn--primary:hover {
@@ -197,7 +209,11 @@ ul {
   transform: translateY(-2px);
 }
 :root[data-theme='dark'] .ate-btn--primary {
-  color: #1a1005;
+  color: #fff;
+  background: #4db2ff;
+}
+:root[data-theme='dark'] .ate-btn--primary:hover {
+  background: #7fc9ff;
 }
 
 .ate-btn--ghost {
@@ -260,18 +276,26 @@ ul {
   }
 }
 
-/* ---------- expand/collapse height transitions (accordion, "ler mais") --- */
+/* ---------- expand/collapse height transitions (accordion, "ler mais") ---
+   Class-based (not Vue <Transition> enter/leave classes) on purpose: the
+   element stays in the DOM and a single reactive class drives the CSS
+   transition, so the animation is a plain CSS state change with no
+   dependency on Vue's enter/leave class sequencing. minmax(0, Nfr) is
+   required — a bare 0fr/1fr can't shrink below the content's min-content
+   height, so the row would never actually collapse. */
 
-.ate-expand-enter-active,
-.ate-expand-leave-active {
-  transition: grid-template-rows 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+.ate-collapse {
   display: grid;
-  grid-template-rows: 1fr;
+  grid-template-rows: minmax(0, 0fr);
+  transition: grid-template-rows 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   overflow: hidden;
 }
-.ate-expand-enter-from,
-.ate-expand-leave-to {
-  grid-template-rows: 0fr;
+.ate-collapse.is-open {
+  grid-template-rows: minmax(0, 1fr);
+}
+.ate-collapse > * {
+  min-height: 0;
+  overflow: hidden;
 }
 
 /* ---------- focus ---------- */

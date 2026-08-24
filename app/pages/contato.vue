@@ -61,12 +61,12 @@ const mapSrc =
             <textarea id="mensagem" v-model="form.mensagem" rows="5" required />
           </div>
           <button type="submit" class="ate-btn ate-btn--primary">Enviar mensagem</button>
-          <Transition name="ate-expand">
-            <p v-if="enviado" class="ate-form__sent">
+          <div class="ate-collapse" :class="{ 'is-open': enviado }">
+            <p class="ate-form__sent">
               Seu aplicativo de e-mail deve abrir com a mensagem pronta — se não abrir, escreva direto para
               <a href="mailto:educacaoatarde@gmail.com">educacaoatarde@gmail.com</a>.
             </p>
-          </Transition>
+          </div>
         </form>
 
         <div class="ate-contato-info ate-reveal" v-reveal="120">
@@ -96,17 +96,11 @@ const mapSrc =
           <h2 class="ate-eyebrow-title">Tem alguma dúvida sobre o A TARDE Educação?</h2>
         </div>
         <div class="ate-faq-list">
-          <AccordionItem
-            v-for="(item, i) in faq"
-            :key="item.pergunta"
-            :title="item.pergunta"
-            :open="openFaq === i"
-            class="ate-reveal"
-            v-reveal="i * 60"
-            @toggle="toggleFaq(i)"
-          >
-            <p>{{ item.resposta }}</p>
-          </AccordionItem>
+          <div v-for="(item, i) in faq" :key="item.pergunta" class="ate-reveal" v-reveal="i * 60">
+            <AccordionItem :title="item.pergunta" :open="openFaq === i" @toggle="toggleFaq(i)">
+              <p>{{ item.resposta }}</p>
+            </AccordionItem>
+          </div>
         </div>
       </div>
     </section>

@@ -6,11 +6,12 @@ const mobileOpen = ref(false)
 const links = [
   { to: '/o-programa', label: 'O Programa' },
   { to: '/area-de-atuacao', label: 'Área de Atuação' },
-  { to: '/formacoes', label: 'Formações' },
+  { to: '/cursos', label: 'Cursos' },
   { to: '/noticias', label: 'Notícias' },
   { to: '/eventos', label: 'Eventos' },
   { to: '/depoimentos', label: 'Depoimentos' },
   { to: '/galeria', label: 'Galeria' },
+  { to: '/politicas-e-termos', label: 'Políticas e Termos' },
 ]
 
 watch(
@@ -82,17 +83,20 @@ onUnmounted(() => {
       </div>
     </div>
 
-    <Transition name="ate-expand">
-      <nav v-if="mobileOpen" id="ate-mobile-nav" class="ate-header__mobile" aria-label="Navegação mobile">
-        <div class="ate-header__mobile-inner">
-          <NuxtLink to="/" class="ate-header__mobile-link">Home</NuxtLink>
-          <NuxtLink v-for="link in links" :key="link.to" :to="link.to" class="ate-header__mobile-link">
-            {{ link.label }}
-          </NuxtLink>
-          <NuxtLink to="/contato" class="ate-btn ate-btn--primary" style="margin-top: 0.5rem">Fale Conosco</NuxtLink>
-        </div>
-      </nav>
-    </Transition>
+    <nav
+      id="ate-mobile-nav"
+      class="ate-header__mobile ate-collapse"
+      :class="{ 'is-open': mobileOpen }"
+      aria-label="Navegação mobile"
+    >
+      <div class="ate-header__mobile-inner">
+        <NuxtLink to="/" class="ate-header__mobile-link">Home</NuxtLink>
+        <NuxtLink v-for="link in links" :key="link.to" :to="link.to" class="ate-header__mobile-link">
+          {{ link.label }}
+        </NuxtLink>
+        <NuxtLink to="/contato" class="ate-btn ate-btn--primary" style="margin-top: 0.5rem">Fale Conosco</NuxtLink>
+      </div>
+    </nav>
   </header>
 </template>
 
@@ -116,8 +120,12 @@ onUnmounted(() => {
   align-items: center;
   gap: 1.5rem;
   height: 76px;
+  max-width: 1340px;
 }
 
+.ate-header__brand {
+  flex-shrink: 0;
+}
 .ate-header__brand img {
   height: 46px;
   width: auto;
@@ -127,7 +135,7 @@ onUnmounted(() => {
 .ate-header__nav {
   display: none;
   align-items: center;
-  gap: 1.35rem;
+  gap: 1.1rem;
   margin-left: 0.5rem;
   flex: 1;
 }
@@ -167,6 +175,7 @@ onUnmounted(() => {
   align-items: center;
   gap: 0.6rem;
   margin-left: auto;
+  flex-shrink: 0;
 }
 
 .ate-theme-toggle {
@@ -222,8 +231,10 @@ onUnmounted(() => {
 }
 
 .ate-header__mobile {
-  border-top: 1px solid var(--ate-line);
   background: var(--ate-bg);
+}
+.ate-header__mobile.is-open {
+  border-top: 1px solid var(--ate-line);
 }
 .ate-header__mobile-inner {
   display: flex;
@@ -241,7 +252,7 @@ onUnmounted(() => {
   color: var(--ate-blue);
 }
 
-@media (min-width: 1000px) {
+@media (min-width: 1260px) {
   .ate-header__nav {
     display: flex;
   }
