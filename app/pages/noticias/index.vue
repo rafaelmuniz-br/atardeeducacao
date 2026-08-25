@@ -3,20 +3,21 @@ import { noticias } from '~/data/noticias'
 
 useSeoMeta({
   title: 'Notícias — A TARDE Educação',
-  description: 'Acompanhe notícias, iniciativas, projetos e temas que fazem parte da atuação do A TARDE Educação.',
+  description: 'Acompanhe as últimas notícias sobre educação publicadas pelo Jornal A TARDE.',
 })
 
-const categorias = ['Todas', ...new Set(noticias.map((n) => n.categoria))]
-const ativa = ref('Todas')
+// Estilo do grid de notícias — duas opções prontas, trocar aqui é reversível
+// a qualquer momento (nenhuma das duas foi removida do projeto):
+// 'fotos'   -> grid grande em masonry, só a foto + "Ler no A TARDE", com a
+//              legenda (data/título/resumo) aparecendo num painel branco que
+//              sobe ao passar o mouse. Pedido explícito do cliente.
+// 'classico' -> versão anterior: card com foto de altura fixa + legenda
+//              sempre visível abaixo.
+const estiloGrid: 'fotos' | 'classico' = 'classico'
+
 const busca = ref('')
 
-const filtradas = computed(() =>
-  noticias.filter((n) => {
-    const naCategoria = ativa.value === 'Todas' || n.categoria === ativa.value
-    const naBusca = matchesSearch(busca.value, n.titulo, n.tags, n.categoria)
-    return naCategoria && naBusca
-  })
-)
+const filtradas = computed(() => noticias.filter((n) => matchesSearch(busca.value, n.titulo, n.tags, n.resumo)))
 </script>
 
 <template>
@@ -24,33 +25,36 @@ const filtradas = computed(() =>
     <PageHero
       kicker="Notícias"
       title="Informação que acompanha a educação e o mundo."
-      text="Acompanhe notícias, iniciativas, projetos e temas que fazem parte da atuação do A TARDE Educação e das discussões que atravessam a escola e a sociedade."
+      text="Acompanhe as últimas notícias sobre educação publicadas pelo Jornal A TARDE. Cada notícia abre no site oficial atarde.com.br."
     />
 
     <section class="ate-section">
-      <div class="ate-container">
+      <div :class="estiloGrid === 'fotos' ? 'ate-container-wide' : 'ate-container'">
         <div class="ate-toolbar ate-reveal" v-reveal>
-          <SearchInput v-model="busca" placeholder="Buscar por título ou tema..." />
-          <div class="ate-filtros">
-            <button
-              v-for="cat in categorias"
-              :key="cat"
-              type="button"
-              class="ate-filtro"
-              :class="{ 'is-active': ativa === cat }"
-              @click="ativa = cat"
-            >
-              {{ cat }}
-            </button>
-          </div>
+          <SearchInput v-model="busca" placeholder="Buscar por título ou tema..." large />
         </div>
 
-        <div v-if="filtradas.length" class="ate-news-grid">
-          <div v-for="(n, i) in filtradas" :key="n.slug" class="ate-reveal" :style="{ transitionDelay: `${(i % 6) * 60}ms` }" v-reveal="0">
-            <NewsCard :noticia="n" />
+        <template v-if="estiloGrid === 'fotos'">
+          <div v-if="filtradas.length" class="ate-photo-grid">
+            <NewsPhotoCard v-for="n in filtradas" :key="n.linkExterno" :noticia="n" />
           </div>
-        </div>
-        <p v-else class="ate-empty">Nenhuma notícia encontrada para essa busca.</p>
+          <p v-else class="ate-empty">Nenhuma notícia encontrada para essa busca.</p>
+        </template>
+
+        <template v-else>
+          <div v-if="filtradas.length" class="ate-news-grid">
+            <div
+              v-for="(n, i) in filtradas"
+              :key="n.linkExterno"
+              class="ate-reveal"
+              :style="{ transitionDelay: `${(i % 6) * 60}ms` }"
+              v-reveal="0"
+            >
+              <NewsCard :noticia="n" />
+            </div>
+          </div>
+          <p v-else class="ate-empty">Nenhuma notícia encontrada para essa busca.</p>
+        </template>
       </div>
     </section>
   </div>
@@ -59,16 +63,8 @@ const filtradas = computed(() =>
 <style scoped>
 .ate-toolbar {
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  margin-bottom: 2.5rem;
-}
-.ate-filtros {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.6rem;
+  justify-content: center;
+  margin-bottom: 3rem;
 }
 .ate-empty {
   padding: 3rem 1rem;
@@ -77,30 +73,32 @@ const filtradas = computed(() =>
   border: 1px dashed var(--ate-line);
   border-radius: var(--ate-radius);
 }
-.ate-filtro {
-  padding: 0.55rem 1.1rem;
-  border-radius: 999px;
-  border: 1px solid var(--ate-line);
-  background: var(--ate-surface);
-  color: var(--ate-ink-soft);
-  font-weight: 600;
-  font-size: 0.86rem;
-  cursor: pointer;
-  transition: all 0.15s ease;
-}
-.ate-filtro:hover {
-  border-color: var(--ate-blue);
-  color: var(--ate-blue);
-}
-.ate-filtro.is-active {
-  background: var(--ate-blue);
-  border-color: var(--ate-blue);
-  color: #fff;
-}
 
+/* ---------- grid clássico (cards com legenda fixa) ---------- */
 .ate-news-grid {
   display: grid;
   gap: 1.5rem;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+}
+
+/* ---------- grid de fotos em masonry ---------- */
+.ate-container-wide {
+  width: 100%;
+  max-width: 1800px;
+  margin: 0 auto;
+  padding: 0 50px;
+}
+
+.ate-photo-grid {
+  columns: 2;
+  column-gap: 1.25rem;
+}
+@media (max-width: 640px) {
+  .ate-photo-grid {
+    columns: 1;
+  }
+  .ate-container-wide {
+    padding: 0 20px;
+  }
 }
 </style>

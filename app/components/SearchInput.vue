@@ -2,14 +2,15 @@
 defineProps<{
   modelValue: string
   placeholder?: string
+  large?: boolean
 }>()
 
 const emit = defineEmits<{ 'update:modelValue': [value: string] }>()
 </script>
 
 <template>
-  <label class="ate-search">
-    <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2">
+  <label class="ate-search" :class="{ 'ate-search--lg': large }">
+    <svg :width="large ? 26 : 19" :height="large ? 26 : 19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
       <circle cx="11" cy="11" r="7" />
       <path d="m21 21-4.3-4.3" stroke-linecap="round" />
     </svg>
@@ -50,6 +51,19 @@ const emit = defineEmits<{ 'update:modelValue': [value: string] }>()
 .ate-search:focus-within {
   border-color: var(--ate-blue);
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--ate-blue) 20%, transparent);
+}
+
+.ate-search--lg {
+  max-width: 760px;
+  padding: 1.5rem 2rem;
+  gap: 1rem;
+}
+.ate-search--lg input {
+  font-size: 1.3rem;
+}
+.ate-search--lg .ate-search__clear {
+  width: 32px;
+  height: 32px;
 }
 
 .ate-search svg {

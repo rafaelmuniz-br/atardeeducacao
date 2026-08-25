@@ -1,110 +1,279 @@
-// Conteúdo placeholder — o site antigo tinha só notícias de teste
-// ("Noticia teste 1", texto "gerado automaticamente" etc). Os itens abaixo
-// seguem o mesmo formato (categoria, capa, resumo, data) para já deixar a
-// listagem, o cartão e a página de notícia funcionando de ponta a ponta;
-// eles devem ser substituídos pelo conteúdo real da equipe de jornalismo
-// assim que definido (ver relatório — indicação futura de CMS via
-// Supabase para a equipe publicar direto).
+// Notícias reais do editoria Educação do Jornal A TARDE
+// (https://atarde.com.br/educacao). O site institucional não republica o
+// conteúdo — cada card é uma chamada (foto, data, autor, resumo) que leva
+// pro artigo original em atarde.com.br, em nova guia. A imagem é carregada
+// direto do CDN do atarde.com.br (cdn.atarde.com.br), sem download/rehost
+// aqui: evita duplicar conteúdo com direito autoral do jornal e mantém o
+// site leve mesmo com muitas notícias.
+//
+// Puxadas manualmente em 24/08/2026, cobrindo as duas primeiras páginas de
+// listagem (23 itens, ~13-24/08/2026) — ver relatório sobre a limitação de
+// site estático pra volume alto/automático de notícias (a solução de longo
+// prazo, se a equipe quiser automatizar isso sem trabalho manual, é um feed
+// alimentando isso via Supabase, não build estático).
 export interface Noticia {
-  slug: string
-  categoria: string
   titulo: string
   resumo: string
-  corpo: string[]
+  autor: string
   data: string
-  cor: string
+  imagem: string
+  linkExterno: string
   tags: string[]
 }
 
 export const noticias: Noticia[] = [
   {
-    slug: 'formacao-continuada-amplia-repertorio-de-professores',
-    categoria: 'Formação',
-    titulo: 'Formação continuada amplia repertório de professores da rede parceira',
-    resumo:
-      'Encontro reuniu educadores para trocar experiências sobre o uso do jornal como recurso pedagógico em sala de aula.',
-    corpo: [
-      'Educadores de municípios parceiros participaram de um novo encontro de formação continuada do A TARDE Educação, com foco em práticas de leitura crítica e uso do jornal como recurso pedagógico.',
-      'Ao longo do encontro, professores trocaram experiências sobre projetos já desenvolvidos em sala de aula e discutiram formas de aproximar o conteúdo jornalístico do cotidiano dos estudantes.',
-      'A formação integra o calendário permanente de Encontros de Educação do programa, realizados ao longo do ano em diferentes territórios.',
-    ],
-    data: '2026-06-12',
-    cor: '#0972b3',
-    tags: ['formação', 'professores', 'encontros de educação', 'jornal na escola'],
+    titulo: 'Estudantes de Salvador vão receber novo auxílio; saiba quem pode ganhar',
+    resumo: 'Programa da Prefeitura de Salvador busca incentivar a permanência de estudantes da EJA.',
+    autor: 'Iarla Queiroz',
+    data: '2026-08-24',
+    imagem:
+      'https://cdn.atarde.com.br/img/Chamada-Home/1390000/479x386/estudantes-de-salvador-vao-receber-novo-auxilio-sa0139959900202608241730/scaleDownOutsideFillBackground-1.webp',
+    linkExterno:
+      'https://atarde.com.br/educacao/estudantes-de-salvador-vao-receber-novo-auxilio-saiba-quem-pode-ganhar-1399599',
+    tags: ['EJA', 'auxílio', 'Salvador', 'prefeitura'],
   },
   {
-    slug: 'jovem-jornalista-2026-inscricoes-abertas',
-    categoria: 'Concurso',
-    titulo: 'Concurso Jovem Jornalista abre inscrições para estudantes da rede parceira',
+    titulo: 'Professores recebem dicas para cuidar da saúde mental; veja',
     resumo:
-      'Iniciativa estimula estudantes a produzir textos, fotorreportagens e vídeos sobre temas relevantes para suas comunidades.',
-    corpo: [
-      'Estão abertas as inscrições para uma nova edição do Concurso Cultural Jovem Jornalista, iniciativa que aproxima estudantes do universo da comunicação e do jornalismo.',
-      'Podem participar estudantes das escolas parceiras do programa, que devem produzir conteúdos autorais sobre temas relevantes para suas comunidades, dentro dos critérios definidos pela organização.',
-      'Os trabalhos selecionados recebem destaque nos canais do A TARDE Educação e concorrem à premiação final.',
-    ],
-    data: '2026-05-28',
-    cor: '#f58220',
-    tags: ['concurso', 'jovem jornalista', 'estudantes', 'jornalismo'],
+      'Especialistas discutem saúde mental e autocuidado de educadores durante a segunda edição do Trampos do Futuro, em São Paulo.',
+    autor: 'Loren Beatriz Sousa',
+    data: '2026-08-24',
+    imagem:
+      'https://cdn.atarde.com.br/img/Chamada-Home/1390000/479x386/professores-recebem-dicas-para-cuidar-da-saude-men0139958900202608241630/scaleDownOutsideFillBackground-1.webp',
+    linkExterno:
+      'https://atarde.com.br/educacao/professores-recebem-dicas-para-cuidar-da-saude-mental-veja-1399589',
+    tags: ['professores', 'saúde mental', 'bem-estar'],
   },
   {
-    slug: 'premio-ecoinovar-projetos-socioambientais',
-    categoria: 'Sustentabilidade',
-    titulo: 'Prêmio Ecoinovar reconhece projetos socioambientais de escolas parceiras',
+    titulo: 'Participantes do Encceja 2026 podem pedir reaplicação até 28 de agosto',
     resumo:
-      'Iniciativas de estudantes e educadores voltadas à sustentabilidade e à transformação socioambiental foram premiadas.',
-    corpo: [
-      'O Prêmio Ecoinovar reconheceu projetos desenvolvidos por escolas parceiras com foco em sustentabilidade, território e transformação socioambiental.',
-      'As iniciativas premiadas nasceram de atividades ligadas ao eixo Socioambiental do programa, que estimula a compreensão das relações entre sociedade, natureza e modos de vida.',
-      'Mais informações sobre a próxima edição serão divulgadas nos canais oficiais do A TARDE Educação.',
-    ],
-    data: '2026-04-30',
-    cor: '#0e8f6b',
-    tags: ['prêmio ecoinovar', 'sustentabilidade', 'socioambiental', 'premiação'],
+      'Quem enfrentou problemas durante a aplicação da prova pode solicitar reaplicação exclusivamente pela Página do Participante.',
+    autor: 'Vitória Sacramento',
+    data: '2026-08-24',
+    imagem:
+      'https://cdn.atarde.com.br/img/Editoria-Destaque/1390000/479x386/encceja-2026-aplica-provas-neste-domingo-confira-l0139888800202608171513/scaleDownOutsideFillBackground-1.webp',
+    linkExterno:
+      'https://atarde.com.br/educacao/participantes-do-encceja-2026-podem-pedir-reaplicacao-ate-28-de-agosto-1399567',
+    tags: ['Encceja', 'exame', 'certificação'],
   },
   {
-    slug: 'educacao-financeira-nas-escolas',
-    categoria: 'Educação Financeira',
-    titulo: 'Educação financeira ganha espaço nas escolas da rede parceira',
+    titulo: 'Pernambués ganha novo colégio após investimento de R$ 15 milhões',
     resumo:
-      'Atividades do eixo Educação Financeira trabalham consumo consciente e planejamento com estudantes do ensino fundamental.',
-    corpo: [
-      'Escolas parceiras do A TARDE Educação têm desenvolvido atividades voltadas à educação financeira, com foco em consumo consciente, planejamento e tomada de decisões.',
-      'As propostas conectam esses temas ao cotidiano dos estudantes, estimulando autonomia e pensamento crítico diante de escolhas do dia a dia.',
-      'A ação integra o eixo Educação Financeira, uma das sete frentes de atuação do programa.',
-    ],
-    data: '2026-04-09',
-    cor: '#1b93dc',
-    tags: ['educação financeira', 'consumo consciente', 'ensino fundamental'],
+      'Colégio Estadual Ministro Aliomar Baleeiro passa a atender cerca de 1.300 estudantes com nove cursos profissionalizantes.',
+    autor: 'Loren Beatriz Sousa e Vitória Sacramento',
+    data: '2026-08-24',
+    imagem:
+      'https://cdn.atarde.com.br/img/Chamada-Home/1390000/479x386/pernambues-ganha-novo-colegio-apos-investimento-de0139954700202608241151/scaleDownOutsideFillBackground-1.webp',
+    linkExterno:
+      'https://atarde.com.br/educacao/pernambues-ganha-novo-colegio-apos-investimento-de-r-15-milhoes-1399547',
+    tags: ['rede estadual', 'infraestrutura', 'Salvador'],
   },
   {
-    slug: 'workshop-midias-digitais-educadores',
-    categoria: 'Tecnologia e Mídia',
-    titulo: 'Workshop discute leitura crítica de mídias digitais com educadores',
+    titulo: 'Pé-de-Meia começa a ser pago nesta segunda; veja quem tem direito',
     resumo:
-      'Encontro formativo tratou de análise de informação, produção de conteúdo e participação responsável no ambiente digital.',
-    corpo: [
-      'O A TARDE Educação promoveu um novo workshop temático voltado à relação crítica com mídias e tecnologias.',
-      'Educadores participantes discutiram estratégias para trabalhar leitura de diferentes linguagens, análise de informações e produção de conteúdo com os estudantes.',
-      'O encontro integra a agenda de Workshops e encontros temáticos do programa, realizados ao longo do ano em diferentes formatos.',
-    ],
-    data: '2026-03-18',
-    cor: '#7b5cf0',
-    tags: ['workshop', 'mídias digitais', 'tecnologia e mídia', 'educadores'],
+      'Parcela de agosto do programa é destinada a estudantes com pelo menos 80% de frequência em maio e junho.',
+    autor: 'Luiza Nascimento',
+    data: '2026-08-24',
+    imagem:
+      'https://cdn.atarde.com.br/img/Editoria-Destaque/1390000/479x386/pe-de-meia-comeca-a-ser-pago-nesta-segunda-veja-qu0139950800202608240646/scaleDownOutsideFillBackground-1.webp',
+    linkExterno:
+      'https://atarde.com.br/educacao/pe-de-meia-comeca-a-ser-pago-nesta-segunda-veja-quem-tem-direito-1399508',
+    tags: ['Pé-de-Meia', 'MEC', 'benefício'],
   },
   {
-    slug: 'encontro-educacao-abre-calendario-2026',
-    categoria: 'Formação',
-    titulo: 'Encontro de Educação abre calendário de formações de 2026',
+    titulo: 'Estudo revela desafios e expectativas dos jovens no mundo do trabalho',
+    resumo: 'Levantamento foi apresentado durante o evento "Trampos do Futuro" em São Paulo.',
+    autor: 'Loren Beatriz Sousa',
+    data: '2026-08-21',
+    imagem:
+      'https://cdn.atarde.com.br/img/Chamada-Home/1390000/479x386/estudo-revela-desafios-e-expectativas-dos-jovens-n0139934900202608211807/scaleDownOutsideFillBackground-1.webp',
+    linkExterno:
+      'https://atarde.com.br/educacao/estudo-revela-desafios-e-expectativas-dos-jovens-no-mundo-do-trabalho-1399349',
+    tags: ['jovens', 'mercado de trabalho', 'educação profissional'],
+  },
+  {
+    titulo: 'Veja filmes que podem ajudar na preparação para o Enem',
+    resumo: 'Produções ajudam a reforçar conteúdos e ampliar referências para a prova.',
+    autor: 'Vitória Sacramento',
+    data: '2026-08-21',
+    imagem:
+      'https://cdn.atarde.com.br/img/Editoria-Destaque/1390000/479x386/veja-filmes-que-podem-ajudar-na-preparacao-para-o-0139931800202608211253/scaleDownOutsideFillBackground-1.webp',
+    linkExterno: 'https://atarde.com.br/educacao/veja-filmes-que-podem-ajudar-na-preparacao-para-o-enem-1399318',
+    tags: ['Enem', 'cinema', 'preparação'],
+  },
+  {
+    titulo: 'Itabuna inicia em setembro pagamento de bolsa para alunos da EJA e mães solo',
+    resumo: 'Primeiros 81 estudantes aprovados receberão o benefício até o 10º dia útil do mês.',
+    autor: 'Vitória Sacramento',
+    data: '2026-08-21',
+    imagem:
+      'https://cdn.atarde.com.br/img/Chamada-Home/1390000/479x386/itabuna-inicia-em-setembro-pagamento-de-bolsa-para0139931100202608211213/scaleDownOutsideFillBackground-1.webp',
+    linkExterno:
+      'https://atarde.com.br/educacao/itabuna-inicia-em-setembro-pagamento-de-bolsa-para-alunos-da-eja-e-maes-solo-1399311',
+    tags: ['Itabuna', 'EJA', 'bolsa'],
+  },
+  {
+    titulo: 'Projeto baiano leva tecnologia sustentável a evento nacional em SP',
+    resumo: 'Iniciativa foi selecionada para a 2ª edição do Trampos do Futuro.',
+    autor: 'Loren Beatriz Sousa',
+    data: '2026-08-20',
+    imagem:
+      'https://cdn.atarde.com.br/img/Chamada-Home/1390000/479x386/projeto-baiano-leva-tecnologia-sustentavel-a-event0139924800202608201821/scaleDownOutsideFillBackground-1.webp',
+    linkExterno:
+      'https://atarde.com.br/educacao/projeto-baiano-leva-tecnologia-sustentavel-a-evento-nacional-em-sp-1399248',
+    tags: ['tecnologia', 'sustentabilidade', 'inovação'],
+  },
+  {
+    titulo: 'Estudantes de Salvador são selecionados para intercâmbio em Portugal',
+    resumo: 'Ao todo, 15 alunos e um professor da rede pública participam de viagem em novembro.',
+    autor: 'Vitória Sacramento',
+    data: '2026-08-20',
+    imagem:
+      'https://cdn.atarde.com.br/img/Chamada-Home/1390000/479x386/estudantes-de-salvador-sao-selecionados-para-inter0139923400202608201617/scaleDownOutsideFillBackground-1.webp',
+    linkExterno:
+      'https://atarde.com.br/educacao/estudantes-de-salvador-sao-selecionados-para-intercambio-em-portugal-1399234',
+    tags: ['intercâmbio', 'Portugal', 'rede pública'],
+  },
+  {
+    titulo: 'Estudantes da rede estadual da Bahia lançam livro de poemas e contos',
+    resumo: 'Obra foi produzida por 20 integrantes do Colégio Estadual Clarice Santiago.',
+    autor: 'Vitória Sacramento',
+    data: '2026-08-19',
+    imagem:
+      'https://cdn.atarde.com.br/img/Chamada-Home/1390000/479x386/estudantes-da-rede-estadual-da-bahia-lancam-livro-0139913600202608191904/scaleDownOutsideFillBackground-1.webp',
+    linkExterno:
+      'https://atarde.com.br/educacao/estudantes-da-rede-estadual-da-bahia-lancam-livro-de-poemas-e-contos-1399136',
+    tags: ['literatura', 'rede estadual', 'protagonismo estudantil'],
+  },
+  {
+    titulo: 'Copa de 2027 pode alterar calendário de escolas em Salvador',
+    resumo: 'Mudanças devem considerar impacto dos jogos e áreas diretamente afetadas.',
+    autor: 'Vitória Sacramento',
+    data: '2026-08-19',
+    imagem:
+      'https://cdn.atarde.com.br/img/Chamada-Home/1390000/479x386/copa-de-2027-pode-alterar-calendario-de-escolas-em0139908200202608191113/scaleDownOutsideFillBackground-1.webp',
+    linkExterno: 'https://atarde.com.br/educacao/copa-de-2027-pode-alterar-calendario-de-escolas-em-salvador-1399082',
+    tags: ['Copa 2027', 'calendário escolar', 'Salvador'],
+  },
+  {
+    titulo: 'Camaçari abre Jogos Escolares com participação de 4,5 mil estudantes',
+    resumo: 'Abertura oficial reuniu estudantes da rede municipal no ginásio da Cidade do Saber, em Camaçari.',
+    autor: 'Loren Beatriz Sousa e Vitória Sacramento',
+    data: '2026-08-18',
+    imagem:
+      'https://cdn.atarde.com.br/img/Chamada-Home/1390000/479x386/camacari-abre-jogos-escolares-com-participacao-de-0139902600202608181841/scaleDownOutsideFillBackground-1.webp',
+    linkExterno:
+      'https://atarde.com.br/educacao/camacari-abre-jogos-escolares-com-participacao-de-45-mil-estudantes-1399026',
+    tags: ['Camaçari', 'esporte escolar', 'rede municipal'],
+  },
+  {
+    titulo: 'Semana da Alfabetização promove formação de profissionais em Itabuna',
+    resumo: 'Semana Municipal da Alfabetização 2026 reúne profissionais envolvidos no processo de alfabetização.',
+    autor: 'Redação',
+    data: '2026-08-18',
+    imagem:
+      'https://cdn.atarde.com.br/img/Editoria-Destaque/1390000/479x386/semana-da-alfabetizacao-promove-formacao-de-profis0139899000202608181419/scaleDownOutsideFillBackground-1.webp',
+    linkExterno:
+      'https://atarde.com.br/educacao/semana-da-alfabetizacao-promove-formacao-de-profissionais-em-itabuna-1398990',
+    tags: ['alfabetização', 'Itabuna', 'formação'],
+  },
+  {
+    titulo: 'A TARDE Educação participa da Jornada Bett Nordeste 2026',
+    resumo: 'Evento em Recife reúne profissionais para discutir tecnologia e práticas pedagógicas.',
+    autor: 'Redação',
+    data: '2026-08-17',
+    imagem:
+      'https://cdn.atarde.com.br/img/Editoria-Destaque/1390000/479x386/a-tarde-educacao-participa-da-jornada-bett-nordest0139886700202608171317/scaleDownOutsideFillBackground-1.webp',
+    linkExterno: 'https://atarde.com.br/educacao/a-tarde-educacao-participa-da-jornada-bett-nordeste-2026-1398867',
+    tags: ['A TARDE Educação', 'tecnologia', 'Bett Nordeste'],
+  },
+  {
+    titulo: 'Estudantes de Camaçari são selecionados para intercâmbio em Lisboa',
     resumo:
-      'Primeira edição do ano reuniu coordenadores pedagógicos das redes parceiras em Salvador.',
-    corpo: [
-      'O A TARDE Educação abriu o calendário de formações de 2026 com um Encontro de Educação voltado a coordenadores pedagógicos das redes parceiras.',
-      'A programação incluiu apresentação dos eixos de atuação do ano e espaço para troca de experiências entre os participantes.',
-      'Novas datas de formação serão divulgadas ao longo do ano nos canais oficiais do programa.',
-    ],
-    data: '2026-02-20',
-    cor: '#0972b3',
-    tags: ['formação', 'coordenadores pedagógicos', 'encontros de educação'],
+      'Cinco estudantes e um professor da rede municipal de Camaçari foram selecionados para intercâmbio cultural em Lisboa, Portugal.',
+    autor: 'Loren Beatriz Sousa',
+    data: '2026-08-17',
+    imagem:
+      'https://cdn.atarde.com.br/img/Chamada-Home/1390000/479x386/estudantes-de-camacari-sao-selecionados-para-inter0139889700202608171702/scaleDownOutsideFillBackground-1.webp',
+    linkExterno:
+      'https://atarde.com.br/educacao/estudantes-de-camacari-sao-selecionados-para-intercambio-em-lisboa-1398897',
+    tags: ['Camaçari', 'intercâmbio', 'Lisboa'],
+  },
+  {
+    titulo: 'Encceja 2026 aplica provas neste domingo; confira locais',
+    resumo: 'Candidatos podem consultar o cartão de confirmação no site do Inep.',
+    autor: 'Vitória Sacramento',
+    data: '2026-08-17',
+    imagem:
+      'https://cdn.atarde.com.br/img/Editoria-Destaque/1390000/479x386/encceja-2026-aplica-provas-neste-domingo-confira-l0139888800202608171513/scaleDownOutsideFillBackground-1.webp',
+    linkExterno: 'https://atarde.com.br/educacao/encceja-2026-aplica-provas-neste-domingo-confira-locais-1398888',
+    tags: ['Encceja', 'Inep', 'exame'],
+  },
+  {
+    titulo: 'Correntina amplia alfabetização e melhora índices da educação',
+    resumo: 'Município elevou resultados nos dois ciclos e alcançou 51% de crianças alfabetizadas.',
+    autor: 'Redação',
+    data: '2026-08-14',
+    imagem:
+      'https://cdn.atarde.com.br/img/Chamada-Home/1390000/479x386/correntina-amplia-alfabetizacao-e-melhora-indices-0139862900202608141500/scaleDownOutsideFillBackground-1.webp',
+    linkExterno:
+      'https://atarde.com.br/educacao/correntina-amplia-alfabetizacao-e-melhora-indices-da-educacao-1398629',
+    tags: ['Correntina', 'alfabetização', 'índices'],
+  },
+  {
+    titulo: 'Escola de Morro do Chapéu cria horta para ensinar alimentação e sustentabilidade',
+    resumo: 'Projeto busca estimular hábitos saudáveis e protagonismo infantil.',
+    autor: 'Vitória Sacramento',
+    data: '2026-08-14',
+    imagem:
+      'https://cdn.atarde.com.br/img/Chamada-Home/1390000/479x386/escola-de-morro-do-chapeu-cria-horta-para-ensinar-0139862500202608141411/scaleDownOutsideFillBackground-1.webp',
+    linkExterno:
+      'https://atarde.com.br/educacao/escola-de-morro-do-chapeu-cria-horta-para-ensinar-alimentacao-e-sustentabilidade-1398625',
+    tags: ['sustentabilidade', 'horta escolar', 'Morro do Chapéu'],
+  },
+  {
+    titulo: 'Professores de Salvador participam de formação sobre leitura e escrita',
+    resumo: 'Atividades abordaram produção e interpretação de notícias no ambiente escolar.',
+    autor: 'Vitória Sacramento',
+    data: '2026-08-14',
+    imagem:
+      'https://cdn.atarde.com.br/img/Editoria-Destaque/1390000/479x386/professores-de-salvador-participam-de-formacao-sob0139861600202608141243/scaleDownOutsideFillBackground-1.webp',
+    linkExterno:
+      'https://atarde.com.br/educacao/professores-de-salvador-participam-de-formacao-sobre-leitura-e-escrita-1398616',
+    tags: ['professores', 'leitura', 'jornal na escola'],
+  },
+  {
+    titulo: 'Prouni: candidatos da 2ª chamada devem comprovar dados até esta sexta',
+    resumo: 'Nesta etapa, os alunos devem encaminhar a documentação exigida pelo MEC.',
+    autor: 'Alice Paulilo',
+    data: '2026-08-14',
+    imagem:
+      'https://cdn.atarde.com.br/img/Chamada-Home/1390000/479x386/prouni-candidatos-da-2-chamada-devem-comprovar-dad0139859000202608140911/scaleDownOutsideFillBackground-1.webp',
+    linkExterno:
+      'https://atarde.com.br/educacao/prouni-candidatos-da-2-chamada-devem-comprovar-dados-ate-esta-sexta-1398590',
+    tags: ['Prouni', 'MEC', 'bolsa'],
+  },
+  {
+    titulo: "Formação do 'Páginas de Aprendizado' reúne professores em Juazeiro",
+    resumo: 'Formação discutiu alfabetização e uso do jornal em sala de aula.',
+    autor: 'Vitória Sacramento',
+    data: '2026-08-13',
+    imagem:
+      'https://cdn.atarde.com.br/img/Editoria-Destaque/1390000/479x386/formacao-do-paginas-de-aprendizado-reune-professor0139852800202608131604/scaleDownOutsideFillBackground-1.webp',
+    linkExterno:
+      'https://atarde.com.br/educacao/formacao-do-paginas-de-aprendizado-reune-professores-em-juazeiro-1398528',
+    tags: ['Juazeiro', 'formação', 'jornal na escola'],
+  },
+  {
+    titulo: 'Formação incentiva uso da arte e da cultura no ensino em Simões Filho',
+    resumo: 'Encontro também abordou educomunicação e formação continuada de professores da rede.',
+    autor: 'Loren Beatriz Sousa',
+    data: '2026-08-13',
+    imagem:
+      'https://cdn.atarde.com.br/img/Chamada-Home/1390000/479x386/formacao-incentiva-uso-da-arte-e-da-cultura-no-ens0139852500202608131532/scaleDownOutsideFillBackground-1.webp',
+    linkExterno:
+      'https://atarde.com.br/educacao/formacao-incentiva-uso-da-arte-e-da-cultura-no-ensino-em-simoes-filho-1398525',
+    tags: ['Simões Filho', 'educomunicação', 'arte e cultura'],
   },
 ]

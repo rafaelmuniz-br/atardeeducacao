@@ -53,17 +53,22 @@ const filtrados = computed(() => eventos.filter((e) => matchesSearch(busca.value
             rel="noopener noreferrer"
             class="ate-card ate-evento ate-reveal"
             v-reveal="i * 90"
-            :style="{ '--evento-primaria': evento.corPrimaria, '--evento-accent': evento.corAccent }"
           >
-            <span class="ate-evento__index">{{ String(i + 1).padStart(2, '0') }}</span>
-            <h3>{{ evento.nome }}</h3>
-            <p>{{ evento.texto }}</p>
-            <span class="ate-evento__link">
-              Visitar site
-              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2">
-                <path d="M7 17 17 7M9 7h8v8" stroke-linecap="round" stroke-linejoin="round" />
-              </svg>
-            </span>
+            <div class="ate-evento__content">
+              <span class="ate-evento__index">{{ String(i + 1).padStart(2, '0') }}</span>
+              <h3>{{ evento.nome }}</h3>
+              <p>{{ evento.texto }}</p>
+              <span class="ate-evento__link">
+                Visitar site
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2">
+                  <path d="M7 17 17 7M9 7h8v8" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </span>
+            </div>
+
+            <div class="ate-evento__photo" :style="{ backgroundImage: `url(${evento.imagem})` }">
+              <span class="ate-evento__photo-name">{{ evento.nome }}</span>
+            </div>
           </a>
         </div>
         <p v-else class="ate-empty">Nenhum evento encontrado para essa busca.</p>
@@ -121,56 +126,47 @@ const filtrados = computed(() => eventos.filter((e) => matchesSearch(busca.value
   display: grid;
   gap: 1.5rem;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  align-items: stretch;
 }
 
 .ate-evento {
   display: block;
-  padding: 2rem;
   position: relative;
+  min-height: 300px;
   overflow: hidden;
-  border-top: 4px solid var(--evento-primaria);
   color: var(--ate-ink);
-  transition: background 0.3s ease, transform 0.25s ease, box-shadow 0.25s ease;
 }
-.ate-evento:hover {
-  background: linear-gradient(
-    135deg,
-    var(--evento-primaria) 0%,
-    color-mix(in srgb, var(--evento-accent) 70%, black 30%) 100%
-  );
-  transform: translateY(-4px);
-  box-shadow: var(--ate-shadow-md);
+
+.ate-evento__content {
+  position: relative;
+  height: 100%;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  transition: opacity 0.3s ease;
+}
+.ate-evento:hover .ate-evento__content {
+  opacity: 0;
 }
 
 .ate-evento__index {
   font-family: var(--ate-font-display);
   font-size: 2rem;
-  color: var(--evento-primaria);
+  color: var(--ate-orange-light);
   display: block;
   margin-bottom: 0.6rem;
-  transition: color 0.3s ease;
 }
-.ate-evento:hover .ate-evento__index {
-  color: rgba(255, 255, 255, 0.55);
+:root[data-theme='dark'] .ate-evento__index {
+  color: rgba(255, 169, 77, 0.35);
 }
-
 .ate-evento h3 {
   font-size: 1.3rem;
   margin-bottom: 0.7rem;
-  transition: color 0.3s ease;
 }
-.ate-evento:hover h3 {
-  color: #fff;
-}
-
-.ate-evento p {
+.ate-evento__content p {
   font-size: 0.96rem;
-  transition: color 0.3s ease;
+  flex: 1;
 }
-.ate-evento:hover p {
-  color: rgba(255, 255, 255, 0.92);
-}
-
 .ate-evento__link {
   display: flex;
   align-items: center;
@@ -178,15 +174,33 @@ const filtrados = computed(() => eventos.filter((e) => matchesSearch(busca.value
   margin-top: 1.2rem;
   font-weight: 700;
   font-size: 0.85rem;
-  color: var(--evento-primaria);
-  opacity: 0;
-  transform: translateX(-6px);
-  transition: opacity 0.25s ease, transform 0.25s ease, color 0.3s ease;
+  color: var(--ate-blue);
 }
-.ate-evento:hover .ate-evento__link {
+
+/* No hover, a foto (recortada pra caber, sem alterar o tamanho do card)
+   aparece cobrindo o conteúdo, com o nome do evento sobre um gradiente
+   escuro no rodapé. */
+.ate-evento__photo {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: flex-end;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+.ate-evento:hover .ate-evento__photo {
   opacity: 1;
-  transform: translateX(0);
+}
+.ate-evento__photo-name {
+  width: 100%;
+  padding: 1.5rem 1.5rem 1.25rem;
+  background: linear-gradient(0deg, rgba(9, 41, 66, 0.85) 0%, rgba(9, 41, 66, 0) 100%);
   color: #fff;
+  font-family: var(--ate-font-display);
+  font-size: 1.15rem;
+  line-height: 1.3;
 }
 
 .ate-empty {
