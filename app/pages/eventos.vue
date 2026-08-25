@@ -9,6 +9,38 @@ useSeoMeta({
 
 const busca = ref('')
 const filtrados = computed(() => eventos.filter((e) => matchesSearch(busca.value, e.nome, e.tags, e.resumo)))
+
+// Em telas sem mouse não existe ":hover" real — o navegador simula um
+// hover de "fantasma" no toque, que já dispara o :hover no primeiro tap e
+// deixa o link navegar direto, sem o visitante nunca ver a prévia. Nesse
+// caso a troca de estado passa a ser por toque: primeiro tap mostra a foto
+// (mesmo estado visual do hover), segundo tap (ou tap fora) navega/fecha.
+const eventoAtivo = ref<number | null>(null)
+const gridRef = ref<HTMLElement | null>(null)
+let temHover = true
+
+function aoClicarCard(e: MouseEvent, i: number) {
+  if (temHover) return
+  if (eventoAtivo.value !== i) {
+    e.preventDefault()
+    eventoAtivo.value = i
+  }
+}
+
+function aoClicarFora(e: MouseEvent) {
+  if (temHover || eventoAtivo.value === null) return
+  if (gridRef.value && !gridRef.value.contains(e.target as Node)) {
+    eventoAtivo.value = null
+  }
+}
+
+onMounted(() => {
+  temHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches
+  document.addEventListener('click', aoClicarFora)
+})
+onUnmounted(() => {
+  document.removeEventListener('click', aoClicarFora)
+})
 </script>
 
 <template>
@@ -44,32 +76,33 @@ const filtrados = computed(() => eventos.filter((e) => matchesSearch(busca.value
           <SearchInput v-model="busca" placeholder="Buscar por nome ou tema..." />
         </div>
 
-        <div v-if="filtrados.length" class="ate-eventos-grid">
-          <a
-            v-for="(evento, i) in filtrados"
-            :key="evento.nome"
-            :href="evento.link"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="ate-card ate-evento ate-reveal"
-            v-reveal="i * 90"
-          >
-            <div class="ate-evento__content">
-              <span class="ate-evento__index">{{ String(i + 1).padStart(2, '0') }}</span>
-              <h3>{{ evento.nome }}</h3>
-              <p>{{ evento.texto }}</p>
-              <span class="ate-evento__link">
-                Visitar site
-                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2">
-                  <path d="M7 17 17 7M9 7h8v8" stroke-linecap="round" stroke-linejoin="round" />
-                </svg>
-              </span>
-            </div>
+        <div v-if="filtrados.length" ref="gridRef" class="ate-eventos-grid">
+          <div v-for="(evento, i) in filtrados" :key="evento.nome" class="ate-reveal" v-reveal="i * 90">
+            <a
+              :href="evento.link"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="ate-card ate-evento"
+              :class="{ 'is-active': eventoAtivo === i }"
+              @click="aoClicarCard($event, i)"
+            >
+              <div class="ate-evento__content">
+                <span class="ate-evento__index">{{ String(i + 1).padStart(2, '0') }}</span>
+                <h3>{{ evento.nome }}</h3>
+                <p>{{ evento.texto }}</p>
+                <span class="ate-evento__link">
+                  Visitar site
+                  <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2">
+                    <path d="M7 17 17 7M9 7h8v8" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </span>
+              </div>
 
-            <div class="ate-evento__photo" :style="{ backgroundImage: `url(${evento.imagem})` }">
-              <span class="ate-evento__photo-name">{{ evento.nome }}</span>
-            </div>
-          </a>
+              <div class="ate-evento__photo" :style="{ backgroundImage: `url(${evento.imagem})` }">
+                <span class="ate-evento__photo-name">{{ evento.nome }}</span>
+              </div>
+            </a>
+          </div>
         </div>
         <p v-else class="ate-empty">Nenhum evento encontrado para essa busca.</p>
       </div>
@@ -132,6 +165,7 @@ const filtrados = computed(() => eventos.filter((e) => matchesSearch(busca.value
 .ate-evento {
   display: block;
   position: relative;
+  height: 100%;
   min-height: 300px;
   overflow: hidden;
   color: var(--ate-ink);
@@ -145,7 +179,16 @@ const filtrados = computed(() => eventos.filter((e) => matchesSearch(busca.value
   flex-direction: column;
   transition: opacity 0.3s ease;
 }
-.ate-evento:hover .ate-evento__content {
+/* Desktop/mouse: hover troca conteúdo <-> foto. Em telas de toque não há
+   hover de verdade, então esse comportamento fica restrito a ponteiros
+   finos com hover real — no toque, a troca é feita pela classe
+   ".is-active" (ver script: primeiro tap ativa, segundo tap navega). */
+@media (hover: hover) and (pointer: fine) {
+  .ate-evento:hover .ate-evento__content {
+    opacity: 0;
+  }
+}
+.ate-evento.is-active .ate-evento__content {
   opacity: 0;
 }
 
@@ -190,7 +233,12 @@ const filtrados = computed(() => eventos.filter((e) => matchesSearch(busca.value
   opacity: 0;
   transition: opacity 0.35s ease;
 }
-.ate-evento:hover .ate-evento__photo {
+@media (hover: hover) and (pointer: fine) {
+  .ate-evento:hover .ate-evento__photo {
+    opacity: 1;
+  }
+}
+.ate-evento.is-active .ate-evento__photo {
   opacity: 1;
 }
 .ate-evento__photo-name {
