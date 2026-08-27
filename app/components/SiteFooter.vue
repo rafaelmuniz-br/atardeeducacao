@@ -21,14 +21,14 @@ const mapaSite = [
           Um programa de educomunicação do Grupo A TARDE, aproximando comunicação e educação desde 1996.
         </p>
         <div class="ate-footer__social">
-          <a href="https://www.instagram.com/atardeeducacao/" target="_blank" rel="noopener" aria-label="Instagram do A TARDE Educação">
+          <a href="https://www.instagram.com/atardeeducacao/" target="_blank" rel="noopener noreferrer" aria-label="Instagram do A TARDE Educação">
             <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.8">
               <rect x="3" y="3" width="18" height="18" rx="5" />
               <circle cx="12" cy="12" r="4" />
               <circle cx="17.2" cy="6.8" r="1" fill="currentColor" stroke="none" />
             </svg>
           </a>
-          <a href="https://atarde.com.br/" target="_blank" rel="noopener" aria-label="Site do Jornal A TARDE">
+          <a href="https://atarde.com.br/" target="_blank" rel="noopener noreferrer" aria-label="Site do Jornal A TARDE">
             <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.8">
               <circle cx="12" cy="12" r="9" />
               <path d="M3 12h18M12 3c2.6 2.6 4 5.7 4 9s-1.4 6.4-4 9c-2.6-2.6-4-5.7-4-9s1.4-6.4 4-9Z" />
@@ -70,7 +70,7 @@ const mapaSite = [
           <NuxtLink to="/politicas-e-termos#termos">Termos de Uso</NuxtLink>
           <NuxtLink to="/politicas-e-termos#cookies">Cookies</NuxtLink>
         </div>
-        <p>Um programa do <a href="https://atarde.com.br/" target="_blank" rel="noopener">Jornal A TARDE</a></p>
+        <p>Um programa do <a href="https://atarde.com.br/" target="_blank" rel="noopener noreferrer">Jornal A TARDE</a></p>
       </div>
     </div>
   </footer>

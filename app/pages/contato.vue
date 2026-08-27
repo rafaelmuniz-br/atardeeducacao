@@ -80,7 +80,7 @@ const mapSrc =
           </div>
           <div class="ate-info-item">
             <h3>Instagram</h3>
-            <p><a href="https://www.instagram.com/atardeeducacao/" target="_blank" rel="noopener">@atardeeducacao</a></p>
+            <p><a href="https://www.instagram.com/atardeeducacao/" target="_blank" rel="noopener noreferrer">@atardeeducacao</a></p>
           </div>
           <div class="ate-map">
             <iframe :src="mapSrc" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Localização do A TARDE Educação" />

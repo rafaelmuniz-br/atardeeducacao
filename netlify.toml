@@ -2,8 +2,22 @@
   command = "npm run generate"
   publish = "dist"
 
+# Site 100% estático (sem backend/API própria) — a CSP abaixo só libera
+# exatamente o que o site carrega hoje: fontes e scripts do próprio build
+# (self), imagens hotlinkadas do CDN do Jornal A TARDE (notícias) e o
+# embed do Google Maps (página de Contato). Qualquer origem nova (ex.:
+# trocar o provedor de mapa ou de imagens) precisa ser adicionada aqui,
+# senão o navegador bloqueia o recurso.
 [[headers]]
   for = "/*"
   [headers.values]
     X-Frame-Options = "DENY"
     X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=(), payment=(), usb=()"
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains"
+    # 'unsafe-inline' em script-src é necessário porque o Nuxt injeta o
+    # payload de hidratação e o script anti-flash de tema (ver
+    # nuxt.config.ts) como <script> inline — não há servidor aqui pra
+    # gerar um nonce por requisição. Sem 'unsafe-inline' o site quebra.
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://cdn.atarde.com.br; font-src 'self'; connect-src 'self'; frame-src https://www.google.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests"
