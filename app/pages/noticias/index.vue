@@ -18,6 +18,9 @@ const estiloGrid: 'fotos' | 'classico' = 'classico'
 const busca = ref('')
 
 const filtradas = computed(() => noticias.filter((n) => matchesSearch(busca.value, n.titulo, n.tags, n.resumo)))
+
+const newsGridRef = ref<HTMLElement | null>(null)
+const cardHeight = useEqualCardHeight(newsGridRef, '.ate-news-card', () => filtradas.value.length)
 </script>
 
 <template>
@@ -42,7 +45,12 @@ const filtradas = computed(() => noticias.filter((n) => matchesSearch(busca.valu
         </template>
 
         <template v-else>
-          <div v-if="filtradas.length" class="ate-news-grid">
+          <div
+            v-if="filtradas.length"
+            ref="newsGridRef"
+            class="ate-news-grid"
+            :style="{ '--ate-card-min-h': cardHeight ? `${cardHeight}px` : undefined }"
+          >
             <div
               v-for="(n, i) in filtradas"
               :key="n.linkExterno"

@@ -31,6 +31,8 @@ function formatDate(iso: string) {
 .ate-news-card {
   display: flex;
   flex-direction: column;
+  height: 100%;
+  min-height: var(--ate-card-min-h, auto);
   overflow: hidden;
   color: var(--ate-ink);
   border-radius: 0;

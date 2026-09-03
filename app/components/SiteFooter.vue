@@ -4,11 +4,12 @@ const year = new Date().getFullYear()
 const mapaSite = [
   { to: '/o-programa', label: 'O Programa' },
   { to: '/area-de-atuacao', label: 'Área de Atuação' },
-  { to: '/cursos', label: 'Cursos' },
+  { to: '/cursos', label: 'Formações' },
   { to: '/noticias', label: 'Notícias' },
   { to: '/eventos', label: 'Eventos' },
   { to: '/depoimentos', label: 'Depoimentos' },
-  { to: '/galeria', label: 'Galeria' },
+  // Galeria oculta a pedido do cliente — ver mesmo comentário em SiteHeader.vue.
+  // { to: '/galeria', label: 'Galeria' },
   { to: '/contato', label: 'Contato' },
 ]
 </script>

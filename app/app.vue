@@ -4,5 +4,6 @@
     <SiteHeader />
     <NuxtPage />
     <SiteFooter />
+    <SiteConsentBanner />
   </div>
 </template>

@@ -2,24 +2,35 @@
 import { cursos } from '~/data/cursos'
 
 useSeoMeta({
-  title: 'Cursos — A TARDE Educação',
+  title: 'Formações — A TARDE Educação',
   description:
-    'Cursos do A TARDE Educação no Ambiente Virtual de Aprendizagem (AVA): formação continuada para educadores.',
+    'Formações do A TARDE Educação no Ambiente Virtual de Aprendizagem (AVA): formação continuada para educadores.',
 })
 
 const busca = ref('')
 const filtrados = computed(() => cursos.filter((c) => matchesSearch(busca.value, c.titulo, c.tag, c.descricao)))
+
+const cursosGridRef = ref<HTMLElement | null>(null)
+const cardHeight = useEqualCardHeight(cursosGridRef, '.ate-course-card', () => filtrados.value.length)
 </script>
 
 <template>
   <div>
     <PageHero
-      kicker="Cursos"
-      title="Cursos para continuar aprendendo e transformar práticas."
-      text="Conheça nosso ambiente de aprendizagem: Acesse o AVA do A TARDE Educação e encontre nossos cursos e conteúdos educativos."
+      kicker="Formações"
+      title="Formação para continuar aprendendo e transformar práticas."
+      text="A formação continuada amplia repertórios, provoca novas perguntas e fortalece a prática educativa. Aprender continuamente também é uma forma de transformar a educação."
     >
-      <a href="http://187.1.111.80/login/index.php" target="_blank" rel="noopener noreferrer" class="ate-btn ate-btn--primary" style="margin-top: 1.5rem">
-        Acessar o AVA
+      <a
+        href="http://187.1.111.80/login/index.php"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="ate-ava-link"
+      >
+        Acesse o nosso ambiente virtual de aprendizagem
+        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2">
+          <path d="M7 17 17 7M9 7h8v8" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
       </a>
     </PageHero>
 
@@ -28,12 +39,17 @@ const filtrados = computed(() => cursos.filter((c) => matchesSearch(busca.value,
         <div class="ate-toolbar ate-reveal" v-reveal>
           <div>
             <p class="ate-kicker" style="margin-bottom: 0.4rem">Catálogo</p>
-            <h2 class="ate-eyebrow-title" style="font-size: 1.6rem">Cursos disponíveis no AVA</h2>
+            <h2 class="ate-eyebrow-title" style="font-size: 1.6rem">Formações disponíveis no AVA</h2>
           </div>
           <SearchInput v-model="busca" placeholder="Buscar por curso ou tema..." />
         </div>
 
-        <div v-if="filtrados.length" class="ate-cursos-grid">
+        <div
+          v-if="filtrados.length"
+          ref="cursosGridRef"
+          class="ate-cursos-grid"
+          :style="{ '--ate-card-min-h': cardHeight ? `${cardHeight}px` : undefined }"
+        >
           <div v-for="(c, i) in filtrados" :key="c.slug" class="ate-reveal" :style="{ transitionDelay: `${(i % 6) * 60}ms` }" v-reveal="0">
             <CourseCard :curso="c" />
           </div>
@@ -45,6 +61,31 @@ const filtrados = computed(() => cursos.filter((c) => matchesSearch(busca.value,
 </template>
 
 <style scoped>
+/* display:inline-block (não flex) pra que, se o texto quebrar em mais de
+   uma linha no celular, a seta flua junto com a última palavra em vez de
+   ficar centralizada flutuando no meio do bloco. */
+.ate-ava-link {
+  display: inline-block;
+  margin-top: 1.5rem;
+  font-weight: 700;
+  font-size: 1.02rem;
+  color: var(--ate-blue);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 0.15s ease;
+}
+.ate-ava-link svg {
+  display: inline-block;
+  vertical-align: -2px;
+  margin-left: 0.35rem;
+}
+.ate-ava-link:hover {
+  color: var(--ate-orange-deep);
+}
+:root[data-theme='dark'] .ate-ava-link:hover {
+  color: var(--ate-orange);
+}
+
 .ate-toolbar {
   display: flex;
   flex-wrap: wrap;

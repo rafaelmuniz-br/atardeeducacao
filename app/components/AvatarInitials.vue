@@ -3,6 +3,7 @@ const props = defineProps<{
   nome: string
   cor: string
   size?: number
+  foto?: string
 }>()
 
 const iniciais = computed(() => {
@@ -14,7 +15,17 @@ const iniciais = computed(() => {
 </script>
 
 <template>
+  <img
+    v-if="foto"
+    class="ate-avatar ate-avatar--foto"
+    :src="foto"
+    :alt="`Foto de ${nome}`"
+    :width="size ?? 56"
+    :height="size ?? 56"
+    loading="lazy"
+  />
   <svg
+    v-else
     class="ate-avatar"
     :width="size ?? 56"
     :height="size ?? 56"
@@ -34,5 +45,9 @@ const iniciais = computed(() => {
   flex-shrink: 0;
   display: block;
   font-family: var(--ate-font-body);
+}
+.ate-avatar--foto {
+  border-radius: 50%;
+  object-fit: cover;
 }
 </style>

@@ -60,6 +60,7 @@
   background: var(--ate-orange);
   top: -160px;
   right: -120px;
+  animation: ate-blob-float-a 18s ease-in-out infinite;
 }
 .ate-hero__blob--b {
   width: 360px;
@@ -68,6 +69,28 @@
   bottom: -180px;
   left: -80px;
   opacity: 0.12;
+  animation: ate-blob-float-b 22s ease-in-out infinite;
+  animation-delay: -6s;
+}
+/* deslocamento + escala bem lentos, tipo uma "respiração" — cada blob
+   com timing/curva diferente pra não ficarem sincronizados */
+@keyframes ate-blob-float-a {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(-35px, 45px) scale(1.12);
+  }
+}
+@keyframes ate-blob-float-b {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(40px, -30px) scale(0.9);
+  }
 }
 
 .ate-hero__inner {
@@ -128,7 +151,9 @@
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .ate-hero__scroll {
+  .ate-hero__scroll,
+  .ate-hero__blob--a,
+  .ate-hero__blob--b {
     animation: none;
   }
 }

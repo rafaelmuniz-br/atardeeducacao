@@ -6,11 +6,14 @@ const mobileOpen = ref(false)
 const links = [
   { to: '/o-programa', label: 'O Programa' },
   { to: '/area-de-atuacao', label: 'Área de Atuação' },
-  { to: '/cursos', label: 'Cursos' },
+  { to: '/cursos', label: 'Formações' },
   { to: '/noticias', label: 'Notícias' },
   { to: '/eventos', label: 'Eventos' },
   { to: '/depoimentos', label: 'Depoimentos' },
-  { to: '/galeria', label: 'Galeria' },
+  // Galeria oculta a pedido do cliente (a página continua no ar em
+  // /galeria, só não aparece no menu) — descomente a linha abaixo pra
+  // reativar a aba quando quiserem.
+  // { to: '/galeria', label: 'Galeria' },
   { to: '/politicas-e-termos', label: 'Políticas e Termos' },
 ]
 
@@ -135,8 +138,8 @@ onUnmounted(() => {
 .ate-header__nav {
   display: none;
   align-items: center;
+  justify-content: center;
   gap: 1.1rem;
-  margin-left: 0.5rem;
   flex: 1;
 }
 

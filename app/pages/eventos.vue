@@ -130,11 +130,26 @@ const filtrados = computed(() => eventos.filter((e) => matchesSearch(busca.value
   margin-bottom: 2.2rem;
 }
 
+/* Só existem 3 eventos (lista fixa), então o número de colunas é
+   travado por breakpoint em vez de usar auto-fit/auto-fill — com
+   auto-fit/auto-fill, quando a busca filtra e sobra 1 ou 2 cards, os
+   restantes cresceriam pra preencher o espaço das colunas que
+   sumiram. Assim o tamanho do card fica igual, filtrado ou não. */
 .ate-eventos-grid {
   display: grid;
   gap: 1.5rem;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   align-items: stretch;
+}
+@media (max-width: 900px) {
+  .ate-eventos-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 640px) {
+  .ate-eventos-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .ate-evento {

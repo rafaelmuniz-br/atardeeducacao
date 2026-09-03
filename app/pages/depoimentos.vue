@@ -90,7 +90,7 @@ onUnmounted(() => {
               </svg>
               <p class="ate-depoimento__texto">{{ dep.texto }}</p>
               <footer>
-                <AvatarInitials :nome="dep.nome" :cor="dep.cor" :size="52" />
+                <AvatarInitials :nome="dep.nome" :cor="dep.cor" :size="52" :foto="dep.foto" />
                 <div class="ate-depoimento__caption">
                   <strong>{{ dep.nome }}</strong>
                   <span>{{ dep.papel }}</span>

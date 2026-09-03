@@ -43,6 +43,8 @@ function formatDate(iso: string) {
 .ate-course-card {
   display: flex;
   flex-direction: column;
+  height: 100%;
+  min-height: var(--ate-card-min-h, auto);
   overflow: hidden;
   color: var(--ate-ink);
 }
