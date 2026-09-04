@@ -10,6 +10,15 @@ const track = ref<HTMLElement | null>(null)
 const slideRefs = ref<HTMLElement[]>([])
 const activeIndex = ref(0)
 
+// "Ler mais" só aparece pra depoimentos longos o suficiente pra
+// realmente precisar (o limite em caracteres é só uma aproximação
+// barata — quem decide onde corta de verdade é o line-clamp no CSS).
+const LIMITE_TEXTO_LONGO = 220
+const expandidos = reactive<Record<string, boolean>>({})
+function toggleExpandido(nome: string) {
+  expandidos[nome] = !expandidos[nome]
+}
+
 function setSlideRef(el: unknown, i: number) {
   if (el instanceof HTMLElement) slideRefs.value[i] = el
 }
@@ -88,7 +97,20 @@ onUnmounted(() => {
               <svg class="ate-depoimento__quote" viewBox="0 0 32 24" width="34" height="26" fill="currentColor">
                 <path d="M0 24V13.6C0 5.6 4.9 0.8 12.6 0v4.9c-4.2.7-6.6 3.3-6.6 6.8H12v12.3H0Zm18 0V13.6c0-8 4.9-12.8 12.6-13.6v4.9c-4.2.7-6.6 3.3-6.6 6.8H30v12.3H18Z" />
               </svg>
-              <p class="ate-depoimento__texto">{{ dep.texto }}</p>
+              <p
+                class="ate-depoimento__texto"
+                :class="{ 'is-truncado': dep.texto.length > LIMITE_TEXTO_LONGO && !expandidos[dep.nome] }"
+              >
+                {{ dep.texto }}
+              </p>
+              <button
+                v-if="dep.texto.length > LIMITE_TEXTO_LONGO"
+                type="button"
+                class="ate-depoimento__ler-mais"
+                @click="toggleExpandido(dep.nome)"
+              >
+                {{ expandidos[dep.nome] ? 'Ler menos' : 'Ler mais' }}
+              </button>
               <footer>
                 <AvatarInitials :nome="dep.nome" :cor="dep.cor" :size="52" :foto="dep.foto" />
                 <div class="ate-depoimento__caption">
@@ -172,6 +194,31 @@ onUnmounted(() => {
   line-height: 1.55;
   margin-bottom: 1.5rem;
 }
+.ate-depoimento__texto.is-truncado {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 5;
+  overflow: hidden;
+}
+.ate-depoimento__ler-mais {
+  display: inline-block;
+  margin: -0.75rem 0 1.5rem;
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--ate-blue);
+  font-weight: 700;
+  font-size: 0.88rem;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+}
+.ate-depoimento__ler-mais:hover {
+  color: var(--ate-orange-deep);
+}
+:root[data-theme='dark'] .ate-depoimento__ler-mais:hover {
+  color: var(--ate-orange);
+}
 .ate-depoimento footer {
   display: flex;
   align-items: center;
@@ -250,6 +297,9 @@ onUnmounted(() => {
 @media (max-width: 640px) {
   .ate-carousel__arrow {
     display: none;
+  }
+  .ate-depoimento__texto {
+    font-size: 1.05rem;
   }
 }
 </style>
